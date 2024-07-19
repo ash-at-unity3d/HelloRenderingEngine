@@ -18,6 +18,16 @@ From the same folder as the `premake5.lua` file:
 
 After this finishes, you will find two new folders have been created at the root of your project: `Solutions` and `Projects`. These folders contain exactly what you would expect, the Visual Studio Solution  (.sln) and the Visual Studio project (.vcxproj).
 
+# OSX
+
+From the same folder as the `premake5.lua` file:
+
+``` bash
+./Tools/osx/premake5 --file=premake5.lua xcode4
+```
+
+After this command finishes, you will find two new folder have been created at the root of your project: `Solutions` and `Projexts`. You will find the XCode project in the `Solutions` folder.
+
 ## ToDo
 
-Build out the OSX results, and add the binaries for OSX.
+Add support for cmake.
