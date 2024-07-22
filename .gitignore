@@ -18,5 +18,7 @@ output/Prune
 
 #ignore the generated Visual Studio solution and project directories
 /bin
+/bin-int
+/libs
 /Projects
 /Solutions

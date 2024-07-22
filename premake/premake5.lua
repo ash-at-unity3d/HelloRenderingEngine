@@ -1,6 +1,6 @@
 workspace "HelloRenderingEngine"
   configurations {"Debug", "Release"}
-  platforms { "Win64" }
+  platforms { "Win64", "macosx" }
   location "../Solutions"
 
 project "Demo"
@@ -8,8 +8,14 @@ project "Demo"
   location "../Projects"
   language "C++"
   targetdir "../bin/%{cfg.buildcfg}"
+  objdir ("../bin-int/%{cfg.buildcfg}/%{prj.name}")
+
+  includedirs {"../dependencies/glfw/include", "glfw"}
+  libdirs {"../bin/%{cfg.buildcfg}"}
 
   files {"../Demo/**.h", "../Demo/**.c", "../Demo/**.cpp"}
+
+  links {"glad", "glfw"}
 
   filter "configurations:Debug"
     defines { "Debug" }
@@ -18,3 +24,65 @@ project "Demo"
   filter "configurations:Release"
     defines { "NDEBUG" }
     optimize "On"
+
+project "Glad"
+    kind "StaticLib"
+    language "C"
+    staticruntime "on"
+    location "../Projects"
+
+    targetdir ("../libs/%{cfg.buildcfg}")
+    objdir ("../bin-int/%{cfg.buildcfg}/%{prj.name}")
+
+    files {
+        "../dependencies/glad/include/glad/glad.h",
+        "../dependencies/glad/include/KHR/khrplatform.h",
+        "../dependencies/glad/OpenGL/src/gl.c"
+    }
+
+    includedirs { "../dependencies/glad/OpenGL/include" }
+
+    filter "system:windows"
+        systemversion "latest"
+
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
+
+project "GLFW"
+    kind "StaticLib"
+    language "C"
+    staticruntime "on"
+    location "../Projects"
+    targetdir ("../libs/%{cfg.buildcfg}")
+    objdir ("../bin-int/%{cfg.buildcfg}/%{prj.name}")
+
+    files {
+        "../dependencies/glfw/include/GLFW",
+        "../dependencies/glfw/src/*"
+    }
+
+    includedirs { "../dependencies/glfw/include" }
+
+    filter "system:windows"
+        systemversion "latest"
+
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
+
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
+
+    filter "platforms:Win64"
+      defines {"_GLFW_WIN32"}
+
+    filter "platforms:macosx"
+      defines {"_GLFW_COCOA"}
+
+
