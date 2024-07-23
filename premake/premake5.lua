@@ -25,6 +25,9 @@ project "Demo"
     defines { "NDEBUG" }
     optimize "On"
 
+  filter "system:macosx"
+    links {"OpenGL.framework","Cocoa.framework", "IOKit.framework", "CoreVideo.framework", "QuartzCore.framework"}
+
 project "Glad"
     kind "StaticLib"
     language "C"
@@ -40,10 +43,13 @@ project "Glad"
         "../dependencies/glad/OpenGL/src/gl.c"
     }
 
-    includedirs { "../dependencies/glad/OpenGL/include" }
 
     filter "system:windows"
-        systemversion "latest"
+      includedirs { "../dependencies/glad/OpenGL/include" }
+      systemversion "latest"
+
+    filter "system:macosx"
+      externalincludedirs { "../dependencies/glad/OpenGL/include" }
 
     filter "configurations:Debug"
         runtime "Debug"
@@ -66,10 +72,12 @@ project "GLFW"
         "../dependencies/glfw/src/*"
     }
 
-    includedirs { "../dependencies/glfw/include" }
-
     filter "system:windows"
-        systemversion "latest"
+      includedirs { "../dependencies/glfw/include" }
+      systemversion "latest"
+
+    filter "system:macosx"
+      externalincludedirs { "../dependencies/glfw/include" }
 
     filter "configurations:Debug"
         runtime "Debug"
@@ -84,5 +92,3 @@ project "GLFW"
 
     filter "platforms:macosx"
       defines {"_GLFW_COCOA"}
-
-
