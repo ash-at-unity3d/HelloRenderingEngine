@@ -9,8 +9,9 @@ project "Demo"
   language "C++"
   targetdir "../bin/%{cfg.buildcfg}"
   objdir ("../bin-int/%{cfg.buildcfg}/%{prj.name}")
+  cppdialect "C++20"
 
-  includedirs {"../dependencies/glfw/include", "glfw"}
+  includedirs {"../dependencies/glfw/include", "glfw", "../Demo"}
   libdirs {"../bin/%{cfg.buildcfg}"}
 
   files {"../Demo/**.h", "../Demo/**.c", "../Demo/**.cpp"}
